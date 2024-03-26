@@ -14,10 +14,9 @@ function increasePoints() {
 
 // Decrease points function
 function decreasePoints() {
-  if (points > 0) {
     points--;
     updatePoints();
-  }
+  
 }
 
 // Function to update hidden input value before form submission
