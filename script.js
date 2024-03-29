@@ -68,3 +68,31 @@ const message = urlParams.get('message');
 if (message) {
     alert(message);
 }
+
+
+
+// Function to fetch milestones data from the server
+function fetchMilestones() {
+    fetch("fetch_milestones.php")
+      .then((response) => response.json())
+
+      .then((data) => {
+        // Clear existing rows
+        const tableBody = document.getElementById("milestonesTableBody");
+        tableBody.innerHTML = "";
+
+        // Add new rows
+        data.forEach((milestone) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>${milestone.activity}</td>
+                <td>${milestone.milestone}</td>
+            `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch((error) => console.error("Error fetching milestones:", error));
+}
+
+// Call fetchMilestones function on page load
+fetchMilestones();
