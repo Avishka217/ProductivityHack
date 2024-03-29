@@ -27,7 +27,7 @@ if ($result->num_rows > 0) {
   $updateSql = "UPDATE points SET points = '$newPoints' WHERE date = '$date'";
 
   if ($conn->query($updateSql) === TRUE) {
-    header('Location: index.html?message=Points updated successfully');
+    header('Location: index.php?message=Points updated successfully');
     exit();
   } else {
     echo "Error updating points: " . $conn->error;
@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
   $insertSql = "INSERT INTO points (date, points) VALUES ('$date', '$points')";
 
   if ($conn->query($insertSql) === TRUE) {
-    header('Location: index.html?message=New record inserted successfully');
+    header('Location: index.php?message=New record inserted successfully');
     exit();
   } else {
     echo "Error inserting record: " . $conn->error;
