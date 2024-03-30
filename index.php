@@ -205,6 +205,14 @@ $conn->close();
       padding: 5px 5px;
       width: 100px;
       display: block;
+      background-color: #8a2be2;
+      /* Purple color */
+      color: #fff;
+      /* Text color */
+      border: none;
+      /* Remove border */
+      border-radius: 5px;
+      /* Rounded corners */
 
       /* Center horizontally */
     }
