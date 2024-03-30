@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['activity']) && isset(
   $milestone = $_POST["milestone"];
 
   // SQL insert statement
-  $sql = "INSERT INTO milestones (date, activity, milestone)
-          VALUES ('$date', '$activity', '$milestone')";
+  $sql = "INSERT INTO milestones (date, activity, milestone, completion_state)
+          VALUES ('$date', '$activity', '$milestone', 0)";
 
   if ($conn->query($sql) === TRUE) {
     // Redirect to avoid form resubmission on page refresh
@@ -35,24 +35,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['activity']) && isset(
   }
 }
 
+// Update completion state if the Done button is clicked
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['milestone_id'])) {
+  $milestone_id = $_POST['milestone_id'];
+
+  // SQL update statement to set completion state to 1
+  $sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
+
+  if ($conn->query($sql) === TRUE) {
+    // Redirect to avoid form resubmission on page refresh
+    header("Location: {$_SERVER['REQUEST_URI']}");
+    exit();
+  } else {
+    echo "<p>Error updating completion state: " . $conn->error . "</p>";
+  }
+}
+
 // Retrieve data for today's milestones
 $date = date('Y-m-d');
-$sql = "SELECT activity , milestone FROM milestones WHERE date = '$date'";
+$sql = "SELECT  id,activity, milestone, completion_state FROM milestones WHERE date = '$date'";
 $result = $conn->query($sql);
 
 $tableBody = ""; // Initialize empty string for table body content
 
-if ($result->num_rows > 0) {
-  // Output data of each row
-  while ($row = $result->fetch_assoc()) {
-    $tableBody .= "<tr>";
-
-    $tableBody .= "<td>" . $row["activity"] . "</td>";
-    $tableBody .= "<td>" . $row["milestone"] . "</td>";
-    $tableBody .= "</tr>";
-  }
+if ($result === false) {
+  echo "<p>Error retrieving milestones: " . $conn->error . "</p>";
 } else {
-  $tableBody = "<tr><td colspan='3'>No milestones found for today.</td></tr>";
+  // Check if there are any rows returned
+  if ($result->num_rows > 0) {
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+      $tableBody .= "<tr>";
+      $tableBody .= "<td>" . $row["activity"] . "</td>";
+      $tableBody .= "<td>" . $row["milestone"] . "</td>";
+      // Add a button labeled "Done" for each milestone
+      $tableBody .= "<td>";
+      if ($row["completion_state"] == 1) {
+        $tableBody .= "Completed";
+      } else {
+        $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
+        $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
+        $tableBody .= "<button id='donebtn' type='submit'>Done</button>";
+        $tableBody .= "</form>";
+      }
+      $tableBody .= "</td>";
+      $tableBody .= "</tr>";
+    }
+  } else {
+    $tableBody = "<tr><td colspan='3'>No milestones found for today.</td></tr>";
+  }
 }
 
 $conn->close();
@@ -68,8 +99,9 @@ $conn->close();
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
-    <style>body {
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
       font-family: Arial, sans-serif;
       /* Set a standard web font */
       margin: 0;
@@ -80,6 +112,8 @@ $conn->close();
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      table-layout: fixed;
+      /* Force table to use fixed layout */
     }
 
     th,
@@ -87,6 +121,8 @@ $conn->close();
       padding: 8px;
       text-align: left;
       border-bottom: 1px solid #ddd;
+      height: 40px;
+      /* Fixed height for table cells */
     }
 
     th {
@@ -157,14 +193,20 @@ $conn->close();
 
     #increaseBtn {
       background-color: #4CAF50;
-      /* Green */
       color: white;
     }
 
     #decreaseBtn {
       background-color: #f44336;
-      /* Light Red */
       color: white;
+    }
+
+    #donebtn {
+      padding: 5px 5px;
+      width: 100px;
+      display: block;
+
+      /* Center horizontally */
     }
   </style>
 </head>
@@ -233,6 +275,7 @@ $conn->close();
 
           <th>Activity</th>
           <th>Milestone</th>
+          <th>Completion State</th>
         </tr>
       </thead>
       <tbody id="milestones-table">
