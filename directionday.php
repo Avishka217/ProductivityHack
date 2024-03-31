@@ -18,19 +18,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direction'])) {
   // Get current date
   $date = date('Y-m-d');
 
-  // Get form data (assuming proper sanitization is done)
-  $direction = $_POST["direction"];
+  // Check if a direction already exists for the current date
+  $existing_direction_sql = "SELECT * FROM directionday WHERE date = '$date'";
+  $existing_direction_result = $conn->query($existing_direction_sql);
 
-  // SQL insert statement
-  $sql = "INSERT INTO directionday (date, direction)
-          VALUES ('$date', '$direction')";
-
-  if ($conn->query($sql) === TRUE) {
-    // Redirect to avoid form resubmission on page refresh
-    header("Location: directionday.php");
-    exit();
+  if ($existing_direction_result->num_rows > 0) {
+    echo "<p style='color:red;'>Error: Only one entry is allowed for each day.</p>";
   } else {
-    echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+    // Get form data (assuming proper sanitization is done)
+    $direction = $_POST["direction"];
+
+    // SQL insert statement
+    $sql = "INSERT INTO directionday (date, direction)
+            VALUES ('$date', '$direction')";
+
+    if ($conn->query($sql) === TRUE) {
+      // Redirect to avoid form resubmission on page refresh
+      header("Location: directionday.php");
+      exit();
+    } else {
+      echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+    }
   }
 }
 
@@ -164,10 +172,7 @@ $conn->close();
         <li class="nav-item">
           <a class="nav-link" href="about.html">About</a>
         </li>
-        <li class="nav-item">
-          <a class="
-          nav-link" href="#">Direction</a>
-        </li>
+        
       </ul>
     </div>
   </nav>
