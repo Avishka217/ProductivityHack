@@ -43,9 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['milestone_id'])) {
   $sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
 
   if ($conn->query($sql) === TRUE) {
-    // Redirect to avoid form resubmission on page refresh
-    header("Location: {$_SERVER['REQUEST_URI']}");
-    exit();
+    // Update points in the points table
+    $date = date('Y-m-d');
+    $update_points_sql = "UPDATE points SET points = points + 5 WHERE date = '$date'";
+
+    if ($conn->query($update_points_sql) === TRUE) {
+      // Redirect to avoid form resubmission on page refresh
+      header("Location: {$_SERVER['REQUEST_URI']}");
+      exit();
+    } else {
+      echo "<p>Error updating points: " . $conn->error . "</p>";
+    }
   } else {
     echo "<p>Error updating completion state: " . $conn->error . "</p>";
   }
@@ -53,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['milestone_id'])) {
 
 // Retrieve data for today's milestones
 $date = date('Y-m-d');
-$sql = "SELECT  id,activity, milestone, completion_state FROM milestones WHERE date = '$date'";
+$sql = "SELECT id, activity, milestone, completion_state FROM milestones WHERE date = '$date'";
 $result = $conn->query($sql);
 
 $tableBody = ""; // Initialize empty string for table body content
@@ -88,6 +96,7 @@ if ($result === false) {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
