@@ -8,20 +8,24 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
 
+      /* Set a standard web font */
+      margin: 0;
+      padding: 0;
     }
 
     .container {
       max-width: 800px;
       margin: 0 auto;
-      background-color: #fff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
     }
 
     h1 {
@@ -50,26 +54,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Points Tracker</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Analytics</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about.html">About</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php include 'navbar.php'; ?>
   <div class="container">
     <h1>About Points Tracker</h1>
     <p>Points Tracker is a versatile system designed to help individuals or teams effectively manage their tasks, track
