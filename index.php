@@ -244,7 +244,12 @@ $conn->close();
           <a class="nav-link" href="#">Analytics</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="about.html">About</a>
+          <a class="
+          nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="
+          nav-link" href="./directionday.php">Direction</a>
         </li>
       </ul>
     </div>
