@@ -101,7 +101,7 @@ if ($result === false) {
       $tableBody .= "<td>" . $row["activity"] . "</td>";
       $tableBody .= "<td>" . $row["milestone"] . "</td>";
       // Add a button labeled "Done" for each milestone
-      $tableBody .= "<td>";
+      $tableBody .= "<td class='completed'>";
       if ($row["completion_state"] == 1) {
         $tableBody .= "Completed";
       } else {
@@ -113,10 +113,12 @@ if ($result === false) {
       // Add a close button for deleting milestone
       $tableBody .= "</td>";
       $tableBody .= "<td>";
-      $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
-      $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
-      $tableBody .= "<button type='submit' name='delete_milestone' class='close-btn'>X</button>";
-      $tableBody .= "</form>";
+      if ($row["completion_state"] != 1) {
+        $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
+        $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
+        $tableBody .= "<button type='submit' name='delete_milestone' class='close-btn'>X</button>";
+        $tableBody .= "</form>";
+      }
       $tableBody .= "</td>";
     }
   } else {
@@ -165,8 +167,13 @@ $conn->close();
       padding: 8px;
       text-align: left;
       border-bottom: 1px solid #ddd;
-      height: 40px;
+      height: 70px;
       /* Fixed height for table cells */
+    }
+
+    .completed {
+      text-align: center;
+      /* Center the text horizontally */
     }
 
     th {
@@ -250,6 +257,7 @@ $conn->close();
       width: 100px;
       display: block;
       background-color: #8a2be2;
+      margin-left: 38px;
       /* Purple color */
       color: #fff;
       /* Text color */
