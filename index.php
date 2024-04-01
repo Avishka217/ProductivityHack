@@ -35,17 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['activity']) && isset(
   }
 }
 
-// Update completion state if the Done button is clicked
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['milestone_id'])) {
+// Handle deletion of milestone
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_milestone'])) {
   $milestone_id = $_POST['milestone_id'];
 
-  // SQL update statement to set completion state to 1
-  $sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
+  // SQL delete statement to delete the milestone
+  $delete_sql = "DELETE FROM milestones WHERE id = $milestone_id";
 
-  if ($conn->query($sql) === TRUE) {
-    // Update points in the points table
+  if ($conn->query($delete_sql) === TRUE) {
+    // Update points in the points table by reducing 5 points
     $date = date('Y-m-d');
-    $update_points_sql = "UPDATE points SET points = points + 5 WHERE date = '$date'";
+    $update_points_sql = "UPDATE points SET points = points - 5 WHERE date = '$date'";
 
     if ($conn->query($update_points_sql) === TRUE) {
       // Redirect to avoid form resubmission on page refresh
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['milestone_id'])) {
       echo "<p>Error updating points: " . $conn->error . "</p>";
     }
   } else {
-    echo "<p>Error updating completion state: " . $conn->error . "</p>";
+    echo "<p>Error deleting milestone: " . $conn->error . "</p>";
   }
 }
 
@@ -86,16 +86,23 @@ if ($result === false) {
         $tableBody .= "<button id='donebtn' type='submit'>Done</button>";
         $tableBody .= "</form>";
       }
+      // Add a close button for deleting milestone
       $tableBody .= "</td>";
-      $tableBody .= "</tr>";
+      $tableBody .= "<td>";
+      $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
+      $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
+      $tableBody .= "<button type='submit' name='delete_milestone' class='close-btn'>X</button>";
+      $tableBody .= "</form>";
+      $tableBody .= "</td>";
     }
   } else {
-    $tableBody = "<tr><td colspan='3'>No milestones found for today.</td></tr>";
+    $tableBody = "<tr><td colspan='4'>No milestones found for today.</td></tr>";
   }
 }
 
 $conn->close();
 ?>
+
 
 
 <!DOCTYPE html>
@@ -115,6 +122,11 @@ $conn->close();
       /* Set a standard web font */
       margin: 0;
       padding: 0;
+    }
+
+    td button {
+      margin-right: 5px;
+      /* Reduce margin between buttons */
     }
 
     table {
@@ -222,8 +234,28 @@ $conn->close();
       /* Remove border */
       border-radius: 5px;
       /* Rounded corners */
+    }
 
-      /* Center horizontally */
+    /* Center horizontally */
+
+    /* Add CSS for close button */
+    .close-btn {
+      width: 50px;
+      padding: 5px 5px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #dc3545;
+
+      /* Red color */
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    .close-btn:hover {
+      background-color: #c82333;
+      /* Darker red color on hover */
     }
   </style>
 </head>
@@ -275,7 +307,7 @@ $conn->close();
 
           <th>Activity</th>
           <th>Milestone</th>
-          <th>Completion State</th>
+          <th colspan="2">Completion State</th>
         </tr>
       </thead>
       <tbody id="milestones-table">
