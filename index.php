@@ -167,7 +167,7 @@ $conn->close();
       padding: 8px;
       text-align: left;
       border-bottom: 1px solid #ddd;
-      height: 70px;
+      height: 40px;
       /* Fixed height for table cells */
     }
 
@@ -211,6 +211,7 @@ $conn->close();
       background-color: #007bff;
       color: #fff;
       margin: 0.5rem;
+
     }
 
     button:hover {
@@ -240,6 +241,7 @@ $conn->close();
       border: 1px solid #ddd;
       border-radius: 5px;
       margin-bottom: 10px;
+      
     }
 
     #increaseBtn {
@@ -287,6 +289,11 @@ $conn->close();
     .close-btn:hover {
       background-color: #c82333;
       /* Darker red color on hover */
+    }
+
+    #milestones-table>tr>td {
+
+      height: 70px;
     }
   </style>
 </head>
