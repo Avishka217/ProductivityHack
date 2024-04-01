@@ -265,7 +265,7 @@ $conn->close();
 
   <?php include 'navbar.php'; ?>
   <div class="container">
-    <h1>Points Tracker</h1>
+    <h1>Points Tracker </h1>
     <div id="pointsDisplay">
       Points: <span id="points">0</span>
     </div>
@@ -307,7 +307,8 @@ $conn->close();
 
           <th>Activity</th>
           <th>Milestone</th>
-          <th colspan="2">Completion State</th>
+          <th>Completion State</th>
+          <th>Cancel</th>
         </tr>
       </thead>
       <tbody id="milestones-table">
