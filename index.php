@@ -59,6 +59,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_milestone'])) 
   }
 }
 
+// Handle marking milestone as completed
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_completed'])) {
+  $milestone_id = $_POST['milestone_id'];
+
+  // SQL update statement to mark the milestone as completed
+  $update_sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
+
+  if ($conn->query($update_sql) === TRUE) {
+    // Update points in the points table by adding 5 points
+    $date = date('Y-m-d');
+    $update_points_sql = "UPDATE points SET points = points + 5 WHERE date = '$date'";
+
+    if ($conn->query($update_points_sql) === TRUE) {
+      // Redirect to avoid form resubmission on page refresh
+      header("Location: {$_SERVER['REQUEST_URI']}");
+      exit();
+    } else {
+      echo "<p>Error updating points: " . $conn->error . "</p>";
+    }
+  } else {
+    echo "<p>Error marking milestone as completed: " . $conn->error . "</p>";
+  }
+}
+
 // Retrieve data for today's milestones
 $date = date('Y-m-d');
 $sql = "SELECT id, activity, milestone, completion_state FROM milestones WHERE date = '$date'";
@@ -83,7 +107,7 @@ if ($result === false) {
       } else {
         $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
         $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
-        $tableBody .= "<button id='donebtn' type='submit'>Done</button>";
+        $tableBody .= "<button id='donebtn' type='submit' name='mark_completed'>Done</button>";
         $tableBody .= "</form>";
       }
       // Add a close button for deleting milestone
@@ -102,7 +126,6 @@ if ($result === false) {
 
 $conn->close();
 ?>
-
 
 
 <!DOCTYPE html>
