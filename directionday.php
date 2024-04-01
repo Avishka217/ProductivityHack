@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['direction'])) {
 }
 
 // Retrieve direction of the day for the last seven days
-$direction_sql = "SELECT date, direction FROM directionday ORDER BY date DESC LIMIT 7";
+$direction_sql = "SELECT id, date, direction FROM directionday ORDER BY date DESC LIMIT 7";
 $direction_result = $conn->query($direction_sql);
 
 $tableBody = ""; // Initialize empty string for table body content
@@ -58,12 +58,37 @@ if ($direction_result === false) {
       $tableBody .= "<tr>";
       $tableBody .= "<td>" . $row["date"] . "</td>";
       $tableBody .= "<td>" . $row["direction"] . "</td>";
+
+      // Add an edit button only if the entry is for the current day
+      if ($row["date"] == date('Y-m-d')) {
+        $tableBody .= "<td><button onclick=\"openEditModal('{$row['id']}', '{$row['direction']}')\">Edit</button></td>";
+      }
+
       $tableBody .= "</tr>";
     }
   } else {
     $tableBody = "<tr><td colspan='2'>No directions found for the last seven days.</td></tr>";
   }
 }
+
+
+// Handle editing direction
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_direction_id'])) {
+  $edit_direction_id = $_POST['edit_direction_id'];
+  $edit_direction = $_POST['edit_direction'];
+
+  // SQL update statement to edit the direction
+  $update_sql = "UPDATE directionday SET direction = '$edit_direction' WHERE id = $edit_direction_id";
+
+  if ($conn->query($update_sql) === TRUE) {
+    // Redirect to avoid form resubmission on page refresh
+    header("Location: directionday.php");
+    exit();
+  } else {
+    echo "<p>Error updating direction: " . $conn->error . "</p>";
+  }
+}
+
 
 $conn->close();
 ?>
@@ -176,6 +201,55 @@ $conn->close();
         <?php echo $tableBody; ?>
       </tbody>
     </table>
+
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Direction</h2>
+        <form id="editForm" action="" method="post">
+          <input type="hidden" id="editDirectionId" name="edit_direction_id">
+          <label for="editDirection">Direction:</label>
+          <input type="text" name="edit_direction" id="editDirection" required>
+          <br>
+          <button type="submit" id="editSubmitBtn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dark overlay -->
+    <div id="darkOverlay"></div>
+
+    <script>
+      var modal = document.getElementById("editModal");
+      var darkOverlay = document.getElementById("darkOverlay");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal
+      function openEditModal(id, direction) {
+        document.getElementById("editDirectionId").value = id;
+        document.getElementById("editDirection").value = direction;
+        modal.style.display = "block";
+        darkOverlay.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+        darkOverlay.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          darkOverlay.style.display = "none";
+        }
+      }
+    </script>
+
+
   </div>
 </body>
 
