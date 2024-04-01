@@ -101,9 +101,9 @@ if ($result === false) {
       $tableBody .= "<td>" . $row["activity"] . "</td>";
       $tableBody .= "<td>" . $row["milestone"] . "</td>";
       // Add a button labeled "Done" for each milestone
-      $tableBody .= "<td class='completed'>";
+      $tableBody .= "<td class='completed' style='color:green;'>";
       if ($row["completion_state"] == 1) {
-        $tableBody .= "Completed";
+        $tableBody .= "<b>Completed</b>";
       } else {
         $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
         $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
