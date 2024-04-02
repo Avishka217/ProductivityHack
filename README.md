@@ -17,7 +17,16 @@ Import the sql dump given in this repo to your local database server
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/b3fed842-fd0c-4a44-bc32-a067df808494)
 
 In the cmd , 
-git clone 
+git clone https://github.com/Avishka217/Personal_Goals_Manager_PHP.git
+
+### Use git pull command to get the latest version from the original repo
+
+Go to the web browser 
+
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/7ab305ba-c099-4bd1-9adb-41ce9c12d19d)
+localhost/wp
+
+Enjoyy the Application . Hustle !! 
 
 
 This project is licensed under the [MIT License](LICENSE).
