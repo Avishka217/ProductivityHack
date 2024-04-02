@@ -185,6 +185,55 @@ $conn->close();
       display: block;
       margin: 0 auto;
     }
+
+    #dateheading {
+      width: 120px;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1000;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Black with opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -205,8 +254,9 @@ $conn->close();
     <table>
       <thead>
         <tr>
-          <th>Date</th>
+          <th id="dateheading">Date</th>
           <th>Direction</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -220,7 +270,7 @@ $conn->close();
         <h4>Edit Direction</h4>
         <form id="editForm" action="" method="post">
           <input type="hidden" id="editDirectionId" name="edit_direction_id">
-          <label for="editDirection">Direction:</label>
+
           <input type="text" name="edit_direction" id="editDirection" required>
           <br>
           <button type="submit" id="editSubmitBtn">Save Changes</button>
@@ -229,34 +279,31 @@ $conn->close();
     </div>
 
     <!-- Dark overlay -->
-    <div id="darkOverlay"></div>
+    <!-- <div id="darkOverlay"></div> -->
 
     <script>
+      // JavaScript to display modal when needed
       var modal = document.getElementById("editModal");
-      var darkOverlay = document.getElementById("darkOverlay");
+      var closeButton = document.getElementsByClassName("close")[0];
 
-      // Get the <span> element that closes the modal
-      var span = document.getElementsByClassName("close")[0];
-
-      // When the user clicks on the button, open the modal
+      // Function to display modal
       function openEditModal(id, direction) {
+        // Populate the form fields with the data
         document.getElementById("editDirectionId").value = id;
         document.getElementById("editDirection").value = direction;
+
         modal.style.display = "block";
-        darkOverlay.style.display = "block";
       }
 
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function() {
+      // Close the modal when close button is clicked
+      closeButton.onclick = function() {
         modal.style.display = "none";
-        darkOverlay.style.display = "none";
       }
 
-      // When the user clicks anywhere outside of the modal, close it
+      // Close the modal when clicking outside of it
       window.onclick = function(event) {
         if (event.target == modal) {
           modal.style.display = "none";
-          darkOverlay.style.display = "none";
         }
       }
     </script>
