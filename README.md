@@ -18,7 +18,7 @@ This is a simple personal goals manager application designed to help you stay fo
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/b3fed842-fd0c-4a44-bc32-a067df808494)
 
 In the cmd , 
-git clone https://github.com/Avishka217/Personal_Goals_Manager_PHP.git
+```git clone https://github.com/Avishka217/Personal_Goals_Manager_PHP.git```
 
 ### Use git pull command to get the latest version from the original repo
 
