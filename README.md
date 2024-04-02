@@ -16,15 +16,14 @@ This is a simple personal goals manager application designed to help you stay fo
 
 ```git clone https://github.com/Avishka217/ProductivityHack.git```
 
-
-Go to the web browser 
-![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/9b90641a-3574-4ab5-b618-eaf46aecec26)
-
+Go to your web browser 
+![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/a97d75d7-774a-4a38-bef6-cfdab4e2bc04)
 
 localhost/ProductivityHack
 [ additionally to get the latest version ] 
 
-Use git pull command to get the latest version from the original repo
+Get the latest version from the original repo
+``` git pull ```
 
 Enjoyy the Application . Hustle !!!!
 
