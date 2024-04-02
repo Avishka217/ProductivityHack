@@ -28,13 +28,15 @@ This is a simple personal goals manager application designed to help you stay fo
 In the cmd , 
 ```git clone https://github.com/Avishka217/ProductivityHack.git```
 
-### Use git pull command to get the latest version from the original repo
+
 
 Go to the web browser 
 ![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/9b90641a-3574-4ab5-b618-eaf46aecec26)
 
 
 localhost/ProductivityHack
+[ additionally to get the latest version ] 
+# Use git pull command to get the latest version from the original repo
 
 Enjoyy the Application . Hustle !!!!
 
