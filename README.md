@@ -36,7 +36,7 @@ Go to the web browser
 
 localhost/ProductivityHack
 [ additionally to get the latest version ] 
-# Use git pull command to get the latest version from the original repo
+Use git pull command to get the latest version from the original repo
 
 Enjoyy the Application . Hustle !!!!
 
