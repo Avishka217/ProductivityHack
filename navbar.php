@@ -1,4 +1,3 @@
-<!-- navbar.php -->
 <?php
 // Get the current page filename
 $currentPage = basename($_SERVER['PHP_SELF']);
@@ -16,13 +15,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       <li class="nav-item <?php echo ($currentPage === 'directionday.php') ? 'active' : ''; ?>">
         <a class="nav-link" href="directionday.php">Direction of the Day</a>
       </li>
+      <li class="nav-item <?php echo ($currentPage === 'recalltheday.php') ? 'active' : ''; ?>">
+        <a class="nav-link" href="recalltheday.php">Recall the Day</a>
+      </li>
       <li class="nav-item <?php echo ($currentPage === 'analytics.php') ? 'active' : ''; ?>">
         <a class="nav-link" href="#">Analytics</a>
       </li>
       <li class="nav-item <?php echo ($currentPage === 'about.php') ? 'active' : ''; ?>">
         <a class="nav-link" href="about.php">About</a>
       </li>
-
     </ul>
   </div>
 </nav>
