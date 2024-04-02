@@ -2,38 +2,33 @@
 
 This is a simple personal goals manager application designed to help you stay focused and productive by tracking your daily activities, milestones, distractions avoided, and the direction of your efforts over time.
 
-## Features
 
-- **Point System**: Earn points by avoiding distractions. Each time you avoid a potential distraction, you can add one point to your total.
-- **Daily Tracking**: Track your points daily, and view the total points of the last 5 days to monitor your progress.
-- **Activity and Milestone Tracking**: Add activities and milestones for the current day. Completing tasks earns you 5 points, and tasks are marked as completed.
-- **Direction of the Day**: Enter the direction of your efforts for the day. A table displays the direction of the day for the last 7 days, allowing you to see if you're consistently focused or if your efforts are scattered.
+## start the XAMPP
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/38f77a85-74d9-4370-87a1-1f34546c415b)
 
-## Usage
+## Go to PHPMyAdmin
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/294700c6-0213-4164-8930-3c7a0aec5b1f)
 
-1. **Avoid Distractions**: Whenever you avoid a potential distraction, add a point to your total points.
-2. **Track Daily Activities and Milestones**: Add tasks and milestones for the current day. Mark them as completed when finished to earn points.
-3. **Set Direction of the Day**: Enter the main focus or direction of your efforts for the day.
-4. **Monitor Progress**: Keep an eye on your total points and the direction of your efforts over time.
+## Import the SQL Dump
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/0510d450-58df-4ba2-b785-e64e24e49292)
 
-## Installation
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/f54291f3-2dd8-4cda-9886-0a9919c6c690)
 
-1. Clone this repository to your local machine.
-2. Navigate to the project directory.
-3. Open the project in your favorite text editor.
-4. Ensure you have PHP installed on your local machine.
-5. Start the application by opening `index.php` in a web browser.
+## Clone the project to the XAMPP htdocs
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/b3fed842-fd0c-4a44-bc32-a067df808494)
 
-## Technologies Used
+In the cmd , 
+```git clone https://github.com/Avishka217/ProductivityHack.git```
 
-- **Frontend**: HTML, JavaScript, CSS, Bootstrap
-- **Backend**: PHP
+### Use git pull command to get the latest version from the original repo
 
-## Contributing
+Go to the web browser 
 
-Contributions are welcome! If you have any ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
-## License
+localhost/ProductivityHack
+
+Enjoyy the Application . Hustle !! 
+
 
 This project is licensed under the [MIT License](LICENSE).
 
