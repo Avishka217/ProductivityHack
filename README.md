@@ -11,7 +11,7 @@ This is a fun idea I implemented myself, which sort of helped me as well. This i
 - SQL
 
 This is a simple personal goals manager application designed to help you stay focused and productive by tracking your daily activities, milestones, distractions avoided, and the direction of your efforts over time.
-
+A basic guide as into how to get the application into working state 
 ## start the XAMPP
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/38f77a85-74d9-4370-87a1-1f34546c415b)
 
