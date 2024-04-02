@@ -179,6 +179,12 @@ $conn->close();
     th {
       background-color: #f2f2f2;
     }
+
+    #submitBtn {
+      width: 30%;
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 </head>
 
@@ -189,13 +195,13 @@ $conn->close();
   <div class="container">
     <h1>Add Direction of the Day</h1>
     <form action="" method="post">
-      <label for="direction">Direction:</label>
-      <input type="text" name="direction" id="direction" required>
-      <br>
-      <button type="submit" id="submitBtn">Add Direction</button>
+
+      <input type="text" name="direction" id="direction" placeholder="Direction of the day" required>
+
+      <button type="submit" id="submitBtn">Submit</button>
     </form>
 
-    <h2>Directions of the Last Seven Days</h2>
+    <h4>Directions of the Last Seven Days</h4>
     <table>
       <thead>
         <tr>
@@ -211,7 +217,7 @@ $conn->close();
     <div id="editModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Edit Direction</h2>
+        <h4>Edit Direction</h4>
         <form id="editForm" action="" method="post">
           <input type="hidden" id="editDirectionId" name="edit_direction_id">
           <label for="editDirection">Direction:</label>
