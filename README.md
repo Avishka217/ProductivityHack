@@ -20,7 +20,7 @@ This is a simple personal goals manager application designed to help you stay fo
 ## Import the SQL Dump
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/0510d450-58df-4ba2-b785-e64e24e49292)
 
-![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/f54291f3-2dd8-4cda-9886-0a9919c6c690)
+![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/2a5fc693-25a9-4fd1-bc90-50cb9e3a5c60)
 
 ## Clone the project to the XAMPP htdocs
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/b3fed842-fd0c-4a44-bc32-a067df808494)
