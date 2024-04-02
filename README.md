@@ -10,6 +10,7 @@ This is a simple personal goals manager application designed to help you stay fo
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/294700c6-0213-4164-8930-3c7a0aec5b1f)
 
 ## Import the SQL Dump
+![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/0510d450-58df-4ba2-b785-e64e24e49292)
 
 ![image](https://github.com/Avishka217/Personal_Goals_Manager_PHP/assets/62095876/f54291f3-2dd8-4cda-9886-0a9919c6c690)
 
