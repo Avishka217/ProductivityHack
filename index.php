@@ -198,8 +198,14 @@ $conn->close();
     }
 
     h1,
-    h2 {
+    h2,
+    h3,
+    h4 {
       margin-top: 0;
+      font-weight: 600;
+      color: #8a2be2;
+      border-top: 1px solid purple;
+      padding-top: 18px;
     }
 
     button {
@@ -241,7 +247,7 @@ $conn->close();
       border: 1px solid #ddd;
       border-radius: 5px;
       margin-bottom: 10px;
-      
+
     }
 
     #increaseBtn {
@@ -249,9 +255,23 @@ $conn->close();
       color: white;
     }
 
+    #increaseBtn:hover {
+      background-color: #45a049;
+      /* Darker shade of green */
+      color: #fff;
+      /* White text */
+    }
+
     #decreaseBtn {
       background-color: #f44336;
       color: white;
+    }
+
+    #decreaseBtn:hover {
+      background-color: #d32f2f;
+      /* Darker shade of red */
+      color: #fff;
+      /* White text */
     }
 
     #donebtn {
@@ -295,6 +315,12 @@ $conn->close();
 
       height: 70px;
     }
+
+    #submitBtn {
+      width: 30%;
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 </head>
 
@@ -314,7 +340,7 @@ $conn->close();
       <button type="submit" id="submitBtn">Submit Points</button>
     </form>
 
-    <h2>Insights</h2>
+    <h4>Points Gain over the week </h4>
     <table id="insightsTable">
       <thead>
         <tr>
@@ -327,18 +353,15 @@ $conn->close();
       </tbody>
     </table>
 
-    <h1>Add Milestone</h1>
+    <h4>Add Milestone</h4>
     <form action="" method="post">
-      <label for="activity">Activity:</label>
-      <input type="text" name="activity" id="activity" required>
-      <br>
-      <label for="milestone">Milestone:</label>
-      <input type="text" name="milestone" id="milestone" required>
-      <br>
+      <input type="text" name="activity" id="activity" placeholder="Add an activity" required>
+      <input type="text" name="milestone" id="milestone" placeholder="Milestone" required>
+
       <button type="submit" id="submitBtn">Add Milestone</button>
     </form>
 
-    <h2>Today's Milestones</h2>
+    <h4>Today's Milestones</h4>
     <table>
       <thead>
         <tr>

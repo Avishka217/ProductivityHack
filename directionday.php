@@ -122,8 +122,14 @@ $conn->close();
     }
 
     h1,
-    h2 {
+    h2,
+    h3,
+    h4 {
       margin-top: 0;
+      font-weight: 600;
+      color: #8a2be2;
+      border-top: 1px solid purple;
+      padding-top: 18px;
     }
 
     form {
