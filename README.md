@@ -1,5 +1,6 @@
 # ProductivityHack
 
+This is a fun idea I implemented myself, which sort of helped me as well. This is the MVP of this application and code needs massive refactoring , which are on the way !!! 
 ### A personal productivity hack web application 
 
 ## Technologies
