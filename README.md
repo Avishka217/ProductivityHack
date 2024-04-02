@@ -42,8 +42,3 @@ Use git pull command to get the latest version from the original repo
 Enjoyy the Application . Hustle !!!!
 
 
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-Special thanks to [contributors](CONTRIBUTORS.md) who have helped in developing this application.
