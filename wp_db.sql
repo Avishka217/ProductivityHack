@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2024 at 03:38 AM
+-- Generation Time: Apr 02, 2024 at 10:41 AM
 -- Server version: 8.0.26
 -- PHP Version: 8.0.28
 
@@ -58,6 +58,18 @@ CREATE TABLE `points` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recollections`
+--
+
+CREATE TABLE `recollections` (
+  `id` int NOT NULL,
+  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `recollection` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -82,6 +94,12 @@ ALTER TABLE `points`
   ADD PRIMARY KEY (`date`);
 
 --
+-- Indexes for table `recollections`
+--
+ALTER TABLE `recollections`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -95,6 +113,12 @@ ALTER TABLE `directionday`
 -- AUTO_INCREMENT for table `milestones`
 --
 ALTER TABLE `milestones`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `recollections`
+--
+ALTER TABLE `recollections`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
