@@ -23,11 +23,12 @@ In the cmd ,
 ### Use git pull command to get the latest version from the original repo
 
 Go to the web browser 
+![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/9b90641a-3574-4ab5-b618-eaf46aecec26)
 
 
 localhost/ProductivityHack
 
-Enjoyy the Application . Hustle !! 
+Enjoyy the Application . Hustle !!!!
 
 
 This project is licensed under the [MIT License](LICENSE).
