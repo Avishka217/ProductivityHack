@@ -111,7 +111,7 @@ $conn->close();
 
 <body>
   <!-- Bootstrap Header Section -->
-  <!-- <?php include 'navbar.php'; ?> -->
+  <?php include 'navbar.php'; ?>
   <div class="container">
     <h1>Recollections Analytics</h1>
     <form action="" method="post">

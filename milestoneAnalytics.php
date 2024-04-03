@@ -1,3 +1,6 @@
+Your code seems mostly correct, but I'll make a few adjustments to ensure consistency and readability:
+
+```php
 <?php
 // Check if the form is submitted and get the active tab parameter
 $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'milestones';
@@ -16,6 +19,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+
+// Initialize $selected_date variable
+$selected_date = '';
 
 // Process form data only if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_date'])) {
@@ -139,7 +145,7 @@ $conn->close();
 
 <body>
   <!-- Bootstrap Header Section -->
-  <!-- <?php include 'navbar.php'; ?> -->
+  <?php include 'navbar.php'; ?>
   <div class="container">
     <h1>Milestone Analytics</h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -150,9 +156,8 @@ $conn->close();
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade <?php if ($active_tab == 'milestones') echo 'show active'; ?>" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
-        <form action="tab=milestones" method="post">
-
-          <input type="date" name="selected_date" required>
+        <form action="" method="post">
+          <input type="date" name="selected_date" value="<?php echo $selected_date; ?>" required>
           <button type="submit">Get Milestones</button>
         </form>
         <?php if (isset($milestone_data)) : ?>
@@ -186,9 +191,4 @@ $conn->close();
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+  <script src="https://code
