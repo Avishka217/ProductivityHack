@@ -1,45 +1,14 @@
 <?php
-// Database connection details (replace with your actual details)
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "wp_db";
-date_default_timezone_set('Asia/Kolkata');
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-// Process form data only if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_date'])) {
-  // Get selected date from the form
-  $selected_date = $_POST['selected_date'];
-
-  // Retrieve recollections of the selected date
-  $recollection_sql = "SELECT timestamp, recollection FROM recollections WHERE DATE(timestamp) = '$selected_date'";
-  $recollection_result = $conn->query($recollection_sql);
-
-  $recollection_text = ""; // Initialize empty string for recollection content
-
-  if ($recollection_result === false) {
-    echo "<p>Error retrieving recollections: " . $conn->error . "</p>";
-  }
-}
-
-$conn->close();
+// Get the current page filename
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recollections Analytics</title>
+  <title>Analytics</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -59,53 +28,6 @@ $conn->close();
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
-    h1,
-    h4 {
-      color: #007bff;
-    }
-
-    form input[type="date"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      box-sizing: border-box;
-    }
-
-    form button[type="submit"] {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      background-color: #007bff;
-      color: #fff;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th,
-    td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .no-recollection {
-      color: #6c757d;
-      font-style: italic;
-    }
   </style>
 </head>
 
@@ -113,37 +35,38 @@ $conn->close();
   <!-- Bootstrap Header Section -->
   <?php include 'navbar.php'; ?>
   <div class="container">
-    <h1>Recollections Analytics</h1>
-    <form action="" method="post">
-      <input type="date" name="selected_date" required>
-      <button type="submit">Get Recollections</button>
-    </form>
-    <?php if (isset($recollection_result)) : ?>
-      <h4>Recollections for <?php echo $selected_date; ?></h4>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Timestamp</th>
-            <th>Recollection</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($recollection_result->num_rows > 0) : ?>
-            <?php while ($row = $recollection_result->fetch_assoc()) : ?>
-              <tr>
-                <td><?php echo $row['timestamp']; ?></td>
-                <td><?php echo $row['recollection']; ?></td>
-              </tr>
-            <?php endwhile; ?>
-          <?php else : ?>
-            <tr>
-              <td colspan="2" class="no-recollection">No recollections found for this date.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    <?php endif; ?>
+    <h1>Analytics</h1>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link <?php echo ($currentPage === 'analytics.php' || $currentPage === 'recallAnalytics.php') ? 'active' : ''; ?>" id="recollections-tab" data-toggle="tab" href="#recollections" role="tab" aria-controls="recollections" aria-selected="true">Recollections Analytics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?php echo ($currentPage === 'milestoneAnalytics.php') ? 'active' : ''; ?>" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestone Analytics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link <?php echo ($currentPage === 'points.php') ? 'active' : ''; ?>" id="points-tab" data-toggle="tab" href="#points" role="tab" aria-controls="points" aria-selected="false">Points Analytics</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade <?php echo ($currentPage === 'analytics.php' || $currentPage === 'recallAnalytics.php') ? 'show active' : ''; ?>" id="recollections" role="tabpanel" aria-labelledby="recollections-tab">
+        <?php include 'recallAnalytics.php'; ?>
+      </div>
+      <div class="tab-pane fade <?php echo ($currentPage === 'milestoneAnalytics.php') ? 'show active' : ''; ?>" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
+        <?php include 'milestoneAnalytics.php'; ?>
+      </div>
+      <div class="tab-pane fade <?php echo ($currentPage === 'points.php') ? 'show active' : ''; ?>" id="points" role="tabpanel" aria-labelledby="points-tab">
+        <?php include 'points.php'; ?>
+      </div>
+    </div>
   </div>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
