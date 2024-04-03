@@ -354,6 +354,12 @@ $conn->close();
     </table>
 
     <h4>Add Milestone</h4>
+    <p style="font-size: 12px; color: #666; text-align: left;">Guidelines:</p>
+    <ol style="font-size: 12px; color: #666; text-align: left;">
+      <li>When you complete a milestone, it adds 5 points to the daily points.</li>
+      <li>When you cancel a milestone, it reduces 5 points.</li>
+      <li>If you keep a milestone without completing or canceling, no marks will be added. This is useful to track your progress on ongoing tasks.</li>
+    </ol>
     <form action="" method="post">
       <input type="text" name="activity" id="activity" placeholder="Add an activity" required>
       <input type="text" name="milestone" id="milestone" placeholder="Milestone" required>

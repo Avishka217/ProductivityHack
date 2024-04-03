@@ -19,7 +19,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <a class="nav-link" href="recalltheday.php">Recall the Day</a>
       </li>
       <li class="nav-item <?php echo ($currentPage === 'analytics.php') ? 'active' : ''; ?>">
-        <a class="nav-link" href="#">Analytics</a>
+        <a class="nav-link" href="analytics.php">Analytics</a>
       </li>
       <li class="nav-item <?php echo ($currentPage === 'about.php') ? 'active' : ''; ?>">
         <a class="nav-link" href="about.php">About</a>
