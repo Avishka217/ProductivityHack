@@ -1,6 +1,3 @@
-Your code seems mostly correct, but I'll make a few adjustments to ensure consistency and readability:
-
-```php
 <?php
 // Check if the form is submitted and get the active tab parameter
 $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'milestones';
