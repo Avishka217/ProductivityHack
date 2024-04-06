@@ -145,12 +145,12 @@ $conn->close();
   <?php include 'navbar.php'; ?>
   <div class="container">
     <h1>Milestone Analytics</h1>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link <?php if ($active_tab == 'milestones') echo 'active'; ?>" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="true">Milestones</a>
       </li>
-      <!-- Add other tabs here -->
-    </ul>
+     
+    </ul> -->
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade <?php if ($active_tab == 'milestones') echo 'show active'; ?>" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
         <form action="" method="post">
