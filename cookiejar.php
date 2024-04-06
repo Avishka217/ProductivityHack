@@ -4,13 +4,33 @@ $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "wp_db";
-
+date_default_timezone_set('Asia/Kolkata');
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
+}
+// Process form data only if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cookie_entry'])) {
+  // Get current timestamp with time
+  $timestamp = date('Y-m-d H:i:s');
+
+  // Get form data (assuming proper sanitization is done)
+  $cookie_entry = $_POST["cookie_entry"];
+
+  // SQL insert statement
+  $sql = "INSERT INTO cookiejarentry (timestamp, entry)
+            VALUES ('$timestamp', '$cookie_entry')";
+
+  if ($conn->query($sql) === TRUE) {
+    // Redirect to avoid form resubmission on page refresh
+    header("Location: cookiejar.php");
+    exit();
+  } else {
+    echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+  }
 }
 
 // Retrieve data from the database
@@ -99,6 +119,15 @@ $conn->close();
       width: 70%;
       /* Adjust the width as needed */
     }
+
+    /* Hide the entries table initially */
+    #entriesTable {
+      display: none;
+    }
+
+    #showEntriesBtn {
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -109,7 +138,6 @@ $conn->close();
   <div class="container">
     <h1>Cookie Jar</h1>
     <p>A cookie jar is a place where you can store your thoughts, memories, or anything else you'd like to remember. Share your entries below!</p>
-
     <h4>Guidelines:</h4>
     <ol>
       <li><strong>Create your cookie jar:</strong> Start by identifying past successes, big or small. This could be finishing a project, learning a new skill, overcoming a personal obstacle, or even a happy memory. Write them down or collect mementos.</li>
@@ -117,40 +145,55 @@ $conn->close();
       <li><strong>Reach into the jar:</strong> When facing challenges, self-doubt, or low motivation, "dip" into your cookie jar. Recall a past success and remind yourself of your resilience and ability to overcome obstacles. This positive boost can help you persevere.</li>
     </ol>
 
-    <form action="" method="post">
+    <form id="cookieForm" action="" method="post">
       <input type="text" name="cookie_entry" id="cookie_entry" placeholder="Write your entry here" required>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submitEntryBtn">Submit</button>
     </form>
-    <br>
-    <h4>Entries in the Cookie Jar</h4>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Timestamp</th>
-          <th class="entry-column">Entry</th> <!-- Apply custom class to adjust width -->
-        </tr>
-      </thead>
-      <tbody>
-        <?php if ($cookie_result->num_rows > 0) : ?>
-          <?php while ($row = $cookie_result->fetch_assoc()) : ?>
-            <tr>
-              <td><?php echo $row['timestamp']; ?></td>
-              <td><?php echo $row['entry']; ?></td>
-            </tr>
-          <?php endwhile; ?>
-        <?php else : ?>
+
+    <!-- Button to show entries -->
+    <button id="showEntriesBtn" class="btn btn-primary">Show the Jar</button>
+    <br><br>
+
+    <div id="entriesTable"> <!-- Entries table initially hidden -->
+      <h4>Entries in the Cookie Jar</h4>
+      <table class="table">
+        <thead>
           <tr>
-            <td colspan="2" class="no-entry">No entries in the cookie jar yet.</td>
+            <th>Timestamp</th>
+            <th class="entry-column">Entry</th> <!-- Apply custom class to adjust width -->
           </tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <?php if ($cookie_result->num_rows > 0) : ?>
+            <?php while ($row = $cookie_result->fetch_assoc()) : ?>
+              <tr>
+                <td><?php echo $row['timestamp']; ?></td>
+                <td><?php echo $row['entry']; ?></td>
+              </tr>
+            <?php endwhile; ?>
+          <?php else : ?>
+            <tr>
+              <td colspan="2" class="no-entry">No entries in the cookie jar yet.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- JavaScript to toggle display of entries table -->
+  <script>
+    $(document).ready(function() {
+      $('#showEntriesBtn').click(function() {
+        $('#entriesTable').toggle(); // Toggle display of entries table
+      });
+    });
+  </script>
 </body>
 
 </html>
