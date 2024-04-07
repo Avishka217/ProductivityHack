@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2024 at 10:41 AM
+-- Generation Time: Apr 07, 2024 at 10:27 AM
 -- Server version: 8.0.26
 -- PHP Version: 8.0.28
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cookiejarentry`
+--
+
+CREATE TABLE `cookiejarentry` (
+  `id` int NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `entry` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `directionday`
 --
 
@@ -31,6 +43,18 @@ CREATE TABLE `directionday` (
   `id` int NOT NULL,
   `date` date NOT NULL,
   `direction` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `habits`
+--
+
+CREATE TABLE `habits` (
+  `id` int NOT NULL,
+  `habit` varchar(255) NOT NULL,
+  `days` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -75,11 +99,23 @@ CREATE TABLE `recollections` (
 --
 
 --
+-- Indexes for table `cookiejarentry`
+--
+ALTER TABLE `cookiejarentry`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `directionday`
 --
 ALTER TABLE `directionday`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `date` (`date`);
+
+--
+-- Indexes for table `habits`
+--
+ALTER TABLE `habits`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `milestones`
@@ -104,9 +140,21 @@ ALTER TABLE `recollections`
 --
 
 --
+-- AUTO_INCREMENT for table `cookiejarentry`
+--
+ALTER TABLE `cookiejarentry`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `directionday`
 --
 ALTER TABLE `directionday`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `habits`
+--
+ALTER TABLE `habits`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
