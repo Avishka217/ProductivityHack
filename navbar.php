@@ -22,6 +22,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       <li class="nav-item <?php echo ($currentPage === 'cookiejar.php') ? 'active' : ''; ?>">
         <a class="nav-link" href="cookiejar.php">Cookie Jar</a>
       </li>
+      <li class="nav-item <?php echo ($currentPage === 'habits.php') ? 'active' : ''; ?>">
+        <a class="nav-link" href="habits.php">Habits</a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle <?php echo ($currentPage === 'analytics.php' || $currentPage === 'recallAnalytics.php' || $currentPage === 'milestoneAnalytics.php') ? 'active' : ''; ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Analytics
