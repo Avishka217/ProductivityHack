@@ -24,9 +24,9 @@
       <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
-            <th class="text-center">Habit</th>
-            <th class="text-center">Days</th>
-            <th class="text-center">Action</th>
+            <th>Habit</th>
+            <th>Days</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -54,9 +54,9 @@
           if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
               echo "<tr>";
-              echo "<td class='text-center'>" . $row['habit'] . "</td>";
-              echo "<td class='text-center'>" . $row['days'] . "</td>";
-              echo "<td class='text-center'><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
+              echo "<td>" . $row['habit'] . "</td>";
+              echo "<td>" . $row['days'] . "</td>";
+              echo "<td><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
               echo "</tr>";
             }
           }
