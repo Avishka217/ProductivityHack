@@ -7,60 +7,26 @@
   <title>Habits</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      padding-top: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-    }
-
-    .habit-form {
-      margin-bottom: 20px;
-    }
-
-    .habit-list th {
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    .habit-list td {
-      vertical-align: middle;
-    }
-
-    .habit-list .btn-danger {
-      width: 100%;
-    }
-
-    .day-count {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #007bff;
-    }
-  </style>
 </head>
 
 <body>
   <?php include 'navbar.php'; ?>
-  <div class="container">
-
+  <div class="container mt-5">
     <h1 class="text-center mb-4">Habits Tracker</h1>
-    <form action="habits.php" method="post" class="habit-form">
+    <form action="habits.php" method="post" class="mb-4">
       <div class="form-group">
         <label for="habit">New Habit:</label>
         <input type="text" class="form-control" id="habit" name="habit" required>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Add Habit</button>
+      <button type="submit" class="btn btn-primary">Add Habit</button>
     </form>
-
     <div class="table-responsive">
-      <table class="table table-bordered habit-list">
-        <thead>
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
           <tr>
-            <th>Habit</th>
-            <th>Days</th>
-            <th>Action</th>
+            <th class="text-center">Habit</th>
+            <th class="text-center">Days</th>
+            <th class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -88,9 +54,9 @@
           if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
               echo "<tr>";
-              echo "<td>" . $row['habit'] . "</td>";
-              echo "<td><span class='day-count'>" . $row['days'] . "</span></td>";
-              echo "<td><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
+              echo "<td class='text-center'>" . $row['habit'] . "</td>";
+              echo "<td class='text-center'>" . $row['days'] . "</td>";
+              echo "<td class='text-center'><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
               echo "</tr>";
             }
           }
@@ -125,7 +91,6 @@
       }
     }
   </script>
-
 </body>
 
 </html>
