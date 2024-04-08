@@ -18,7 +18,7 @@
         <label for="habit">New Habit:</label>
         <input type="text" class="form-control" id="habit" name="habit" required>
       </div>
-      <button type="submit" class="btn btn-primary">Add Habit</button>
+      <button type="submit" class="btn btn-primary" name="submit">Add Habit</button>
     </form>
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover">
@@ -31,7 +31,43 @@
         </thead>
         <tbody>
           <?php
-          // Your PHP code to fetch and display habits goes here
+          // Connect to database
+          $conn = mysqli_connect("localhost", "root", "root", "wp_db");
+          if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+          }
+
+          // Handle form submission
+          if (isset($_POST['submit'])) {
+            $habit = $_POST['habit'];
+            $sql = "INSERT INTO habits (habit) VALUES ('$habit')";
+            if (mysqli_query($conn, $sql)) {
+              // Success message
+              echo "<script>alert('Habit added successfully.');</script>";
+              // Refresh the page to display the updated habit list
+              echo "<meta http-equiv='refresh' content='0'>";
+            } else {
+              // Error message
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+          }
+
+          // Fetch habits from database
+          $sql = "SELECT * FROM habits";
+          $result = mysqli_query($conn, $sql);
+          if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              // Echo out HTML for each habit row
+              echo "<tr class='habit-row' data-start-date='" . $row['start_date'] . "'>";
+              echo "<td>" . $row['habit'] . "</td>";
+              echo "<td class='days'></td>";
+              echo "<td><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
+              echo "</tr>";
+            }
+          } else {
+            echo "<tr><td colspan='3'>No habits found.</td></tr>";
+          }
+          mysqli_close($conn);
           ?>
         </tbody>
       </table>
@@ -65,7 +101,7 @@
         updateHabitDays();
       }
     }, 60000); // Check every minute if it's midnight
-    
+
     function restartHabit(habitId) {
       if (confirm("Are you sure you want to restart the habit?")) {
         var xhr = new XMLHttpRequest();
