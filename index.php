@@ -59,40 +59,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_milestone'])) 
   }
 }
 
-        // Handle marking milestone as completed
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_completed'])) {
-          $milestone_id = $_POST['milestone_id'];
+// Handle marking milestone as completed
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_completed'])) {
+  $milestone_id = $_POST['milestone_id'];
 
-          // SQL update statement to mark the milestone as completed
-          $update_sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
+  // SQL update statement to mark the milestone as completed
+  $update_sql = "UPDATE milestones SET completion_state = 1 WHERE id = $milestone_id";
 
-          if ($conn->query($update_sql) === TRUE) {
-            // Check if there's an entry in the points table for the current date
-            $date = date('Y-m-d');
-            $check_points_sql = "SELECT * FROM points WHERE date = '$date'";
-            $result = $conn->query($check_points_sql);
+  if ($conn->query($update_sql) === TRUE) {
+    // Check if there's an entry in the points table for the current date
+    $date = date('Y-m-d');
+    $check_points_sql = "SELECT * FROM points WHERE date = '$date'";
+    $result = $conn->query($check_points_sql);
 
-            if ($result->num_rows == 0) {
-              // If no entry exists, create a new entry for the current date
-              $insert_points_sql = "INSERT INTO points (date, points) VALUES ('$date', 5)";
-              if ($conn->query($insert_points_sql) !== TRUE) {
-                echo "<p>Error creating points entry: " . $conn->error . "</p>";
-              }
-            } else {
-              // If an entry exists, update the points by adding 5 points
-              $update_points_sql = "UPDATE points SET points = points + 5 WHERE date = '$date'";
-              if ($conn->query($update_points_sql) !== TRUE) {
-                echo "<p>Error updating points: " . $conn->error . "</p>";
-              }
-            }
+    if ($result->num_rows == 0) {
+      // If no entry exists, create a new entry for the current date
+      $insert_points_sql = "INSERT INTO points (date, points) VALUES ('$date', 5)";
+      if ($conn->query($insert_points_sql) !== TRUE) {
+        echo "<p>Error creating points entry: " . $conn->error . "</p>";
+      }
+    } else {
+      // If an entry exists, update the points by adding 5 points
+      $update_points_sql = "UPDATE points SET points = points + 5 WHERE date = '$date'";
+      if ($conn->query($update_points_sql) !== TRUE) {
+        echo "<p>Error updating points: " . $conn->error . "</p>";
+      }
+    }
 
-            // Redirect to avoid form resubmission on page refresh
-            header("Location: {$_SERVER['REQUEST_URI']}");
-            exit();
-          } else {
-            echo "<p>Error marking milestone as completed: " . $conn->error . "</p>";
-          }
-        }
+    // Redirect to avoid form resubmission on page refresh
+    header("Location: {$_SERVER['REQUEST_URI']}");
+    exit();
+  } else {
+    echo "<p>Error marking milestone as completed: " . $conn->error . "</p>";
+  }
+}
 
 
 // Retrieve data for today's milestones
@@ -119,7 +119,7 @@ if ($result === false) {
       } else {
         $tableBody .= "<form method='post' action='{$_SERVER['REQUEST_URI']}'>";
         $tableBody .= "<input type='hidden' name='milestone_id' value='" . $row['id'] . "'>";
-        $tableBody .= "<button id='donebtn' type='submit' name='mark_completed'>Done</button>";
+        $tableBody .= "<button id='donebtn' type='submit' name='mark_completed'>✓</button>";
         $tableBody .= "</form>";
       }
       // Add a close button for deleting milestone
@@ -288,9 +288,9 @@ $conn->close();
 
     #donebtn {
       padding: 5px 5px;
-      width: 100px;
+      width: 50px;
       display: block;
-      background-color: #8a2be2;
+      background-color: #2be231;
       margin-left: 38px;
       /* Purple color */
       color: #fff;
@@ -343,7 +343,7 @@ $conn->close();
   <div class="container">
     <h1>Distraction KickMeter </h1>
     <div id="pointsDisplay">
-      Points: <span id="points">0</span>
+      Will Power Credits: <span id="points">0</span>
     </div>
     <button id="increaseBtn">Avoided a distraction</button>
     <button id="decreaseBtn">Coudn't</button>
