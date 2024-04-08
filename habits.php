@@ -9,7 +9,18 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    .container {
+    
+
+
+    body {
+      font-family: Arial, sans-serif;
+      /* Set a standard web font */
+      margin: 0;
+      padding: 0;
+    }
+
+  
+ .container {
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
