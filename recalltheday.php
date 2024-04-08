@@ -65,6 +65,7 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recall the Day</title>
   <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="style.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -79,7 +80,7 @@ $conn->close();
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
-      background-color: #fff;
+      background-color: #F1EEDC;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }

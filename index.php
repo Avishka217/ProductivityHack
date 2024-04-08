@@ -159,6 +159,31 @@ $conn->close();
       /* Set a standard web font */
       margin: 0;
       padding: 0;
+      background-image: url('./images/background.jpg');
+      /* Add your doodle background image */
+      background-size: cover;
+      /* Cover the entire viewport */
+    }
+
+    /* Overlay with 70% opacity */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      /* White with 70% opacity */
+      z-index: -1;
+      /* Place it behind other content */
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      /* Set a standard web font */
+      margin: 0;
+      padding: 0;
     }
 
     td button {
@@ -206,7 +231,7 @@ $conn->close();
       padding: 20px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      background-color: #fff;
+      background-color: #F1EEDC;
     }
 
     h1,

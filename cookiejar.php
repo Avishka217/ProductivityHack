@@ -49,7 +49,7 @@ $conn->close();
   <title>Cookie Jar</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -62,7 +62,7 @@ $conn->close();
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
-      background-color: #fff;
+      background-color: #F1EEDC;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }

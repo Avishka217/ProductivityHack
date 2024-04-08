@@ -7,11 +7,22 @@
   <title>Habits</title>
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #F1EEDC;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 
 <body>
   <?php include 'navbar.php'; ?>
-  <div class="container mt-5">
+  <div class="container">
     <h1 class="text-center mb-4">Habits Tracker</h1>
     <form action="habits.php" method="post" class="mb-4">
       <div class="form-group">

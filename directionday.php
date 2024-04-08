@@ -118,7 +118,7 @@ $conn->close();
       padding: 20px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      background-color: #fff;
+      background-color: #F1EEDC;
     }
 
     h1,
