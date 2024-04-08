@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2024 at 10:27 AM
+-- Generation Time: Apr 08, 2024 at 02:22 PM
 -- Server version: 8.0.26
 -- PHP Version: 8.0.28
 
@@ -54,7 +54,7 @@ CREATE TABLE `directionday` (
 CREATE TABLE `habits` (
   `id` int NOT NULL,
   `habit` varchar(255) NOT NULL,
-  `days` int NOT NULL DEFAULT '1'
+  `start_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -115,7 +115,8 @@ ALTER TABLE `directionday`
 -- Indexes for table `habits`
 --
 ALTER TABLE `habits`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_habit` (`habit`);
 
 --
 -- Indexes for table `milestones`
