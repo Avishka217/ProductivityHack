@@ -31,36 +31,7 @@
         </thead>
         <tbody>
           <?php
-          // Connect to database
-          $conn = mysqli_connect("localhost", "root", "root", "wp_db");
-          if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-          }
-
-          // Handle form submission
-          if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $habit = $_POST['habit'];
-            $sql = "INSERT INTO habits (habit, days) VALUES ('$habit', 1)";
-            if (mysqli_query($conn, $sql)) {
-              echo "<meta http-equiv='refresh' content='0'>"; // Refresh page to update list
-            } else {
-              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
-          }
-
-          // Display habits from database
-          $sql = "SELECT * FROM habits";
-          $result = mysqli_query($conn, $sql);
-          if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-              echo "<tr>";
-              echo "<td>" . $row['habit'] . "</td>";
-              echo "<td>" . $row['days'] . "</td>";
-              echo "<td><button class='btn btn-danger' onclick='restartHabit(" . $row['id'] . ")'>Restart</button></td>";
-              echo "</tr>";
-            }
-          }
-          mysqli_close($conn);
+          // Your PHP code to fetch and display habits goes here
           ?>
         </tbody>
       </table>
@@ -72,6 +43,29 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <script>
+    // Function to update habit days based on system date
+    function updateHabitDays() {
+      var habits = document.querySelectorAll('.habit-row');
+      habits.forEach(function(habit) {
+        var startDate = new Date(habit.dataset.startDate);
+        var currentDate = new Date();
+        var diffTime = Math.abs(currentDate - startDate);
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        habit.querySelector('.days').textContent = diffDays;
+      });
+    }
+
+    // Call the function initially
+    updateHabitDays();
+
+    // Check and update habit days every midnight
+    setInterval(function() {
+      var currentDate = new Date();
+      if (currentDate.getHours() === 0 && currentDate.getMinutes() === 0) {
+        updateHabitDays();
+      }
+    }, 60000); // Check every minute if it's midnight
+    
     function restartHabit(habitId) {
       if (confirm("Are you sure you want to restart the habit?")) {
         var xhr = new XMLHttpRequest();

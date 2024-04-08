@@ -341,18 +341,18 @@ $conn->close();
 
   <?php include 'navbar.php'; ?>
   <div class="container">
-    <h1>Points Tracker </h1>
+    <h1>Distraction KickMeter </h1>
     <div id="pointsDisplay">
       Points: <span id="points">0</span>
     </div>
-    <button id="increaseBtn">Increase Points</button>
-    <button id="decreaseBtn">Decrease Points</button>
+    <button id="increaseBtn">Avoided a distraction</button>
+    <button id="decreaseBtn">Coudn't</button>
     <form id="pointsForm" action="submit.php" method="post">
       <input type="hidden" id="pointsInput" name="points">
-      <button type="submit" id="submitBtn">Submit Points</button>
+      <button type="submit" id="submitBtn">Submitt !</button>
     </form>
 
-    <h4>Points Gain over the week </h4>
+    <h4> Points for avoiding distrations over the last 5 days </h4>
     <table id="insightsTable">
       <thead>
         <tr>
