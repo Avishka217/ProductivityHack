@@ -368,7 +368,8 @@ $conn->close();
   <div class="container">
     <h1>Distraction KickMeter </h1>
     <div id="pointsDisplay">
-      Will Power Credits: <span id="points">0</span>
+     <b> Will Power Credits: </b><span id="points" style="font-weight: 
+     800;">0</span>
     </div>
     <button id="increaseBtn">Avoided a distraction</button>
     <button id="decreaseBtn">Coudn't</button>
