@@ -17,7 +17,8 @@ This is a simple personal goals manager application designed to help you stay fo
 ```git clone https://github.com/Avishka217/ProductivityHack.git```
 
 Go to your web browser 
-![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/a97d75d7-774a-4a38-bef6-cfdab4e2bc04)
+![image](https://github.com/Avishka217/ProductivityHack/assets/62095876/30186791-6a92-4844-aec2-a4ee4796df3e)
+
 
 localhost/ProductivityHack
 [ additionally to get the latest version ] 
