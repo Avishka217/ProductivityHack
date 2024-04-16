@@ -87,8 +87,13 @@ $conn->close();
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .complete_btn {
-      width: fit-content;
+    #complete_form{
+      display: flex;
+      float: right;
+    }
+    #additembtn{
+      width: 200px;
+     margin: 0 auto;
     }
   </style>
 </head>
@@ -107,7 +112,7 @@ $conn->close();
         <label for="description">Description:</label>
         <textarea class="form-control" id="description" name="description" rows="3"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Add to Bucket List</button>
+      <button id="additembtn"  type="submit" class="btn btn-primary">Add to Bucket List</button>
     </form>
     <br>
     <h4>My Bucket List Items</h4>
@@ -119,9 +124,9 @@ $conn->close();
             <p><?php echo $row['description']; ?></p>
             <small class="text-muted">Added on: <?php echo $row['created_at']; ?></small>
             <?php if (!$row['completed']) : ?>
-              <form action="" method="post">
+              <form id="complete_form" method="post">
                 <input type="hidden" name="item_id" value="<?php echo $row['id']; ?>">
-                <button type="submit" class="btn btn-success complete_btn" name="complete">Complete</button>
+                <button id="complete_btn" type="submit" class="btn btn-success complete_btn" name="complete">Complete</button>
               </form>
             <?php else : ?>
               <span class="text-success">Completed</span>
