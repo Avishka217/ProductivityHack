@@ -1,29 +1,34 @@
 <?php
+// restarthabit.php
 
-// Connect to database
-$conn = mysqli_connect("localhost", "root", "root", "wp_db");
+// Check if habit_id is set in POST data
+if (isset($_POST['habit_id'])) {
+  // Sanitize habit_id to prevent SQL injection
+  $habit_id = intval($_POST['habit_id']);
 
-// Check connection
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
+  // Connect to the database
+  $conn = mysqli_connect("localhost", "root", "root", "wp_db");
 
-// Get habit ID from POST data
-$habit_id = $_POST['habit_id'];
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
 
-// Check if habit ID is set
-if (!isset($habit_id)) {
-  echo "Error: Habit ID not provided.";
-  exit;
-}
+  // SQL query to update habit data (you need to adjust this query based on your database schema)
+  $sql = "UPDATE habits SET start_date = NOW() WHERE id = $habit_id";
 
-// Update habit days in database
-$sql = "UPDATE habits SET days = 1 WHERE id = $habit_id";
+  // Execute the query
+  if (mysqli_query($conn, $sql)) {
+    // If the query was successful, echo 'success'
+    echo 'success';
+  } else {
+    // If there was an error with the query, echo 'error'
+    echo 'error';
+  }
 
-if (mysqli_query($conn, $sql)) {
-  echo "success"; // Send success message on update
+  // Close the database connection
+  mysqli_close($conn);
 } else {
-  echo "Error: " . $sql . "<br>" . mysqli_error($conn); // Send error message
+  // If habit_id is not set in POST data, echo 'error'
+  echo 'error';
 }
-
-mysqli_close($conn);

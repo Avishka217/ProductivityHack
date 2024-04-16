@@ -9,9 +9,6 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    
-
-
     body {
       font-family: Arial, sans-serif;
       /* Set a standard web font */
@@ -19,8 +16,8 @@
       padding: 0;
     }
 
-  
- .container {
+
+    .container {
       max-width: 800px;
       margin: 20px auto;
       padding: 20px;
@@ -133,7 +130,8 @@
           if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === 'success') {
               alert('Habit restarted successfully.');
-              location.reload(); // Reload the page to update the habit list
+              // Reload the page to get the updated habit list
+              window.location.reload();
             } else {
               alert('Failed to restart habit.');
             }
