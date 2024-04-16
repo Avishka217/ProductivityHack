@@ -41,15 +41,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['item'])) {
   }
 }
 
+// Process completion of item
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete'])) {
+  $item_id = $_POST['item_id'];
+  $complete_sql = "UPDATE bucketlist SET completed = 1 WHERE id = $item_id";
+  if ($conn->query($complete_sql) === TRUE) {
+    header("Location: bucketlist.php");
+    exit();
+  } else {
+    echo "<p>Error completing item: " . $conn->error . "</p>";
+  }
+}
+
 // Retrieve bucket list items with pagination
-$bucketlist_sql = "SELECT id, item, description, created_at FROM bucketlist ORDER BY created_at DESC LIMIT $start_from, $results_per_page";
+$bucketlist_sql = "SELECT id, item, description, created_at, completed FROM bucketlist ORDER BY created_at DESC LIMIT $start_from, $results_per_page";
 $bucketlist_result = $conn->query($bucketlist_sql);
 
 // Count total number of items for pagination
 $total_results_sql = "SELECT COUNT(*) AS total FROM bucketlist";
 $total_results_result = $conn->query($total_results_sql);
 $total_results_row = $total_results_result->fetch_assoc();
-$total_pages = ceil($total_results_row['total'] / $results_per_page);
+$total_results = $total_results_row['total'];
+$total_pages = ($total_results > 0) ? ceil($total_results / $results_per_page) : 1;
 
 $conn->close();
 ?>
@@ -72,6 +85,10 @@ $conn->close();
       background-color: #F1EEDC;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .complete_btn {
+      width: fit-content;
     }
   </style>
 </head>
@@ -101,6 +118,14 @@ $conn->close();
             <h5><?php echo $row['item']; ?></h5>
             <p><?php echo $row['description']; ?></p>
             <small class="text-muted">Added on: <?php echo $row['created_at']; ?></small>
+            <?php if (!$row['completed']) : ?>
+              <form action="" method="post">
+                <input type="hidden" name="item_id" value="<?php echo $row['id']; ?>">
+                <button type="submit" class="btn btn-success complete_btn" name="complete">Complete</button>
+              </form>
+            <?php else : ?>
+              <span class="text-success">Completed</span>
+            <?php endif; ?>
           </li>
         <?php endwhile; ?>
       <?php else : ?>
