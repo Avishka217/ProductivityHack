@@ -1,161 +1,99 @@
+<?php
+// Database connection details (replace with your actual details)
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "wp_db";
+date_default_timezone_set('Asia/Kolkata');
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Process form data only if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['item'])) {
+  // Get form data (assuming proper sanitization is done)
+  $item = $_POST["item"];
+  $description = $_POST["description"];
+
+  // SQL insert statement
+  $sql = "INSERT INTO bucketlist (item, description)
+            VALUES ('$item', '$description')";
+
+  if ($conn->query($sql) === TRUE) {
+    // Redirect to avoid form resubmission on page refresh
+    header("Location: bucketlist.php");
+    exit();
+  } else {
+    echo "<p>Error: " . $sql . "<br>" . $conn->error . "</p>";
+  }
+}
+
+// Retrieve bucket list items
+$bucketlist_sql = "SELECT id, item, description, created_at FROM bucketlist ORDER BY created_at DESC";
+$bucketlist_result = $conn->query($bucketlist_sql);
+
+$conn->close();
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Bucketlist</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bucket List</title>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Bootstrap Datepicker CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #F1EEDC;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 
 <body>
-
-  <div class="container mt-5">
-    <h2>Add Bucketlist Item</h2>
-    <form action='bucketlist.php' method='post' class="mb-3">
+  <!-- Bootstrap Header Section -->
+  <?php include 'navbar.php'; ?>
+  <div class="container">
+    <h1>My Bucket List</h1>
+    <form action="" method="post">
       <div class="form-group">
-        <label for="item_name">Bucketlist Item:</label>
-        <input type='text' name='item_name' class="form-control">
+        <label for="item">Item:</label>
+        <input type="text" class="form-control" id="item" name="item" required>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add to Bucket List</button>
     </form>
-
-    <h2>Bucketlist</h2>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Completion Date</th>
-            <th>Completion State</th>
-            <th>Details</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          // Include your database connection file
-          include 'db_connection.php';
-
-          // Insert new bucketlist item
-          if (isset($_POST['item_name'])) {
-            $item_name = $_POST['item_name'];
-            $sql = "INSERT INTO bucketlist (item_name) VALUES ('$item_name')";
-            if ($conn->query($sql) === TRUE) {
-              echo "<script>alert('New record created successfully');</script>";
-            } else {
-              echo "<script>alert('Error: " . $sql . "<br>" . $conn->error . "');</script>";
-            }
-          }
-
-          // Your PHP code for displaying bucketlist items here
-          $sql = "SELECT * FROM bucketlist";
-          $result = $conn->query($sql);
-
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-              echo "<tr>
-                                <td>" . $row["item_name"] . "</td>
-                                <td>" . $row["completion_date"] . "</td>
-                                <td>" . $row["completion_state"] . "</td>
-                                <td>" . $row["details"] . "</td>
-                                <td><button onclick='editItem(" . $row["id"] . ")' class='btn btn-primary'>Edit</button></td>
-                            </tr>";
-            }
-          } else {
-            echo "<tr><td colspan='5'>0 results</td></tr>";
-          }
-          $conn->close();
-          ?>
-        </tbody>
-      </table>
-    </div>
+    <br>
+    <h4>My Bucket List Items</h4>
+    <ul class="list-group">
+      <?php if ($bucketlist_result->num_rows > 0) : ?>
+        <?php while ($row = $bucketlist_result->fetch_assoc()) : ?>
+          <li class="list-group-item">
+            <h5><?php echo $row['item']; ?></h5>
+            <p><?php echo $row['description']; ?></p>
+            <small class="text-muted">Added on: <?php echo $row['created_at']; ?></small>
+          </li>
+        <?php endwhile; ?>
+      <?php else : ?>
+        <li class="list-group-item">No items in the bucket list yet.</li>
+      <?php endif; ?>
+    </ul>
   </div>
-
-  <!-- Bootstrap JS (optional) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Bootstrap Datepicker JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-  <!-- JavaScript for editing bucketlist item -->
-  <script>
-    function editItem(id) {
-      var modalHtml = `
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit Bucketlist Item</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editForm">
-                                <div class="form-group">
-                                    <label for="completion_state">Completion State:</label>
-                                    <select class="form-control" id="completion_state" name="completion_state">
-                                      <option value="completed">Completed</option>
-                                      <option value="not_completed">Not Completed</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="completion_date">Completion Date:</label>
-                                    <input type="text" class="form-control datepicker" id="completion_date" name="completion_date">
-                                </div>
-                                <div class="form-group">
-                                    <label for="details">Details:</label>
-                                    <textarea class="form-control" id="details" name="details"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" onclick="submitEditForm(${id})">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-      $('body').append(modalHtml);
-      $('#editModal').modal('show');
-      // Initialize Bootstrap Datepicker
-      $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-      });
-    }
-
-    function submitEditForm(id) {
-      var completion_state = $('#completion_state').val();
-      var completion_date = $('#completion_date').val();
-      var details = $('#details').val();
-      var formData = new FormData();
-      formData.append('update_id', id);
-      formData.append('completion_date', completion_date);
-      formData.append('completion_state', completion_state);
-      formData.append('details', details);
-
-      fetch('bucketlist.php', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-          alert(data);
-          $('#editModal').modal('hide');
-          location.reload();
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
-  </script>
-
 </body>
 
 </html>
-```
