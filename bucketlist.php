@@ -14,6 +14,14 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+// Pagination variables
+$results_per_page = 5; // Number of items per page
+$current_page = 1; // Default current page
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+  $current_page = intval($_GET['page']);
+}
+$start_from = ($current_page - 1) * $results_per_page;
+
 // Process form data only if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['item'])) {
   // Get form data (assuming proper sanitization is done)
@@ -33,9 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['item'])) {
   }
 }
 
-// Retrieve bucket list items
-$bucketlist_sql = "SELECT id, item, description, created_at FROM bucketlist ORDER BY created_at DESC";
+// Retrieve bucket list items with pagination
+$bucketlist_sql = "SELECT id, item, description, created_at FROM bucketlist ORDER BY created_at DESC LIMIT $start_from, $results_per_page";
 $bucketlist_result = $conn->query($bucketlist_sql);
+
+// Count total number of items for pagination
+$total_results_sql = "SELECT COUNT(*) AS total FROM bucketlist";
+$total_results_result = $conn->query($total_results_sql);
+$total_results_row = $total_results_result->fetch_assoc();
+$total_pages = ceil($total_results_row['total'] / $results_per_page);
 
 $conn->close();
 ?>
@@ -93,6 +107,16 @@ $conn->close();
         <li class="list-group-item">No items in the bucket list yet.</li>
       <?php endif; ?>
     </ul>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <?php for ($page = 1; $page <= $total_pages; $page++) : ?>
+          <li class="page-item <?php echo ($page == $current_page) ? 'active' : ''; ?>">
+            <a class="page-link" href="bucketlist.php?page=<?php echo $page; ?>"><?php echo $page; ?></a>
+          </li>
+        <?php endfor; ?>
+      </ul>
+    </nav>
   </div>
 </body>
 
